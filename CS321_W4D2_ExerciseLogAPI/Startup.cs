@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using CS321_W4D2_ExerciseLogAPI.Infrastructure.Data; // not recognizing
+using CS321_W4D2_ExerciseLogAPI.Core.Services;
 
 namespace CS321_W4D2_ExerciseLogAPI
 {
@@ -25,9 +27,22 @@ namespace CS321_W4D2_ExerciseLogAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // TODO: AddDbContext
-            // TODO: register repositories for injection
-            // TODO: register services for injection
+            services.AddScoped<AppDbContext>();
+            //  AddDbContext
+            services.AddDbContext<AppDbContext>();
+            //  register repositories for injection
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IActivityRepository, ActivityRepository>();
+            services.AddScoped<IActivityService, ActivityService>();
+
+            services.AddScoped<IActivityTypeRepository, ActivityTypeRepository>();
+            services.AddScoped<IActivityTypeService, ActivityTypeService>();
+
+
+
+            //  register services for injection
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -49,4 +64,3 @@ namespace CS321_W4D2_ExerciseLogAPI
         }
     }
 }
-//
